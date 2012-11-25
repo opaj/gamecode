@@ -1,0 +1,180 @@
+# Builds the Lists of Spheres and saves them to Data/Spheres. This file is then referenced for Sphere data during gameplay.
+# Made this class because RMXP's editor doesn't allow for the modification of new object classes.
+
+class Data_Builder
+  def initialize
+  end
+  # ----------------------------------------------------------------------
+  # builds a hash of sphere objects
+  def Data_Builder.build
+    spheres = {}
+    # ------------------------------------------------------------ 00: -None- (NPCs only)
+    name = "-None-"
+    spheres[0] = Game_Sphere.new(0, name)
+    # ------------------------------------------------------------ 01: Blade
+    id = 1
+    name = "Blade"
+    icon_name = "001-Weapon01"
+    description = ["Damage enemies with bladed weapons such as","swords, daggers, and spears.  Attack-mode techs only."]
+    path = []
+    # ---------------------------------- Lv. 1
+    cost = 5
+    skill_id = 10
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    # ---------------------------------- Lv. 2
+    cost = 10
+    skill_id = 11
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    # ---------------------------------- Lv. 3
+    cost = 20
+    skill_id = 12
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    # ---------------------------------- Lv. 4
+    cost = 40
+    skill_id = 13
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    # ---------------------------------- Lv. 5
+    cost = 80
+    skill_id = 14
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    # ---------------------------------- Lv. 6
+    cost = 160
+    skill_id = 15
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    # ---------------------------------- Lv. 7
+    cost = 320
+    skill_id = 16
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    # ---------------------------------- Lv. 8
+    cost = 640
+    skill_id = 17
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    
+    hp = 0
+    sp = 0
+    mp = 0
+    atk = 4
+    pdef = 0
+    mdef = 0
+    dex = 1
+    spd = 1
+    int = 0
+    endr = 1
+    wil = 0
+    stats = [hp,sp,mp,atk,pdef,mdef,dex,spd,int,endr,wil]
+    spheres[id] = Game_Sphere.new(id, name,icon_name,description,path,stats)
+    
+    
+    # ------------------------------------------------------------ 02: Unarmed
+    id = 2
+    name = "Unarmed"
+    icon_name = "050-Skill07"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    
+    # ------------------------------------------------------------ 03: Brute
+    id = 3
+    name = "Brute"
+    icon_name = "007-Weapon07"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    
+    # ------------------------------------------------------------ 04: Sonic Blade
+    id = 4
+    name = "Sonic Blade"
+    icon_name = "001-Weapon01"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 05: Slight
+    id = 5
+    name = "Slight"
+    icon_name = "004-Weapon04"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 06: Slight
+    id = 6
+    name = "Martial Arts"
+    icon_name = "050-Skill07"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 09: Heavy Guard
+    id = 9
+    name = "Heavy Guard"
+    icon_name = "009-Shield01"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    
+    # ------------------------------------------------------------ 10: Lightning
+    id = 10
+    name = "Lightning"
+    icon_name = "044-Skill01"
+    description = ["Strike enemies with lightning magic, which incorporates", "chaos to do random damage and strike random targets.","Support-Mode magic only."]
+    path = []
+    # ---------------------------------- Lv. 1
+    cost = 5
+    skill_id = 100
+    path.push(Game_SphereSkill.new(cost,skill_id))
+    
+    hp = 0
+    sp = 5
+    mp = 5
+    atk = 0
+    pdef = 0
+    mdef = 0
+    dex = 0
+    spd = 0
+    int = 1
+    endr = 0
+    wil = 1
+    stats = [hp,sp,mp,atk,pdef,mdef,dex,spd,int,endr,wil]
+    spheres[id] = Game_Sphere.new(id, name,icon_name,description,path,stats)
+    
+    # ------------------------------------------------------------ 11: Fire Magic
+    id = 11
+    name = "Fire"
+    icon_name = "Sphere-Fire"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 12: Plant Magic
+    id = 12
+    name = "Plant"
+    icon_name = "025-Herb01"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 13: Earth Magic
+    id = 13
+    name = "Earth"
+    icon_name = "Sphere-Earth"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 14: Water Magic
+    id = 14
+    name = "Water"
+    icon_name = "045-Skill02"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 15: Metal Magic
+    id = 15
+    name = "Metal"
+    icon_name = "006-Weapon06"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 16: Light Magic
+    id = 16
+    name = "Light"
+    icon_name = "Sphere-Light"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 17: Shadow Magic
+    id = 17
+    name = "Shadow"
+    icon_name = "Sphere-Shadow"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 18: Healing Magic
+    id = 18
+    name = "Healer"
+    icon_name = "036-Item05"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 19: First Aid (Weak Healing)
+    id = 19
+    name = "First Aid"
+    icon_name = "036-Item04"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    # ------------------------------------------------------------ 20: Mortification
+    id = 20
+    name = "Mortification"
+    icon_name = "046-Skill03"
+    spheres[id] = Game_Sphere.new(id, name, icon_name)
+    
+    return spheres
+    
+  end
+end

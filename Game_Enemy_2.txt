@@ -1,0 +1,37 @@
+class Game_Enemy < Game_Battler
+  
+  def is_enemy
+    return true
+  end
+
+  def battle_start
+    reset_moves
+    @x = 100 - @member_index * 20
+    @y = 280 + @member_index * 10
+    @z = @member_index
+  end
+  
+  def update
+    action = super
+    move = @moves[@moves_index]
+    if move.can_act and @timer >= @wait
+      reset_moves
+      @moves = $game_skills[self.make_action] + @moves
+      @battler_index = @moves[0].frame
+    end
+    return action
+  end
+  
+  def check_range
+    return $scene.check_range_right(@x + range)
+  end
+  
+  def check_retreat
+    return @x <= 100 - @member_index * 20
+  end
+  
+  def range
+    return 50
+  end
+  
+end

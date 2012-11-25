@@ -1,0 +1,14 @@
+class Game_Enemy < Game_Battler
+  #--------------------------------------------------------------------------
+  # ? TP   RETURNS TP OF ENEMY
+  #--------------------------------------------------------------------------
+  def tp
+    case @enemy_id
+    when 1                     #---Noiro
+      return 10
+    when 2
+      return 100000000000
+    end
+    return 1337                    #---Default
+  end
+end

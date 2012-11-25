@@ -1,0 +1,118 @@
+class Game_Battler
+  
+  def screen_x
+    return @x
+  end
+  
+  def screen_y
+    return @y
+  end
+  
+  def screen_z
+    return @z
+  end
+  
+  def battler_name
+    return @battler_name[@battler_index]
+  end
+  
+  def battle_start
+    reset_moves
+  end
+  
+  def reset_moves                                                          # call at every new battle
+    @moves_index = 0
+    if @frontline
+      @moves = $game_skills[4]
+    else
+      @moves = $game_skills[0]
+    end
+    @battler_index = @moves[0].frame
+    @timer = 0
+  end
+  
+  def update
+    advance = false
+    move = @moves[@moves_index]
+    @timer += (Math.sqrt(dex * 50)) / 50
+    if move.time >= 0
+      advance = @timer >= move.time
+    end
+    if move.type == 1
+      if check_range
+        advance = true
+      end
+    elsif move.type == 2
+      if check_retreat
+        advance = true
+      end
+    end
+    if move.animated
+      @battler_index = move.frame(@timer)
+    end
+    if advance
+      @timer = 0
+      @moves_index += 1
+      move = @moves[@moves_index]
+      @battler_index = move.frame
+    else
+      @x += ( move.dx * -1 * (@facing - 2) ) * spd / 50
+      @y += move.dy
+      @z += move.dz
+    end
+    return move.action
+  end
+  
+  def check_range
+    return false
+  end
+  
+  def range
+    return 30
+  end
+  
+  def stagger(damage)
+    chance = damage * @moves[@moves_index].interrupt_factor / 100
+    chance -= self.endr / 2
+    if chance > rand(100)
+      @moves_index = 0
+      @moves = $game_skills[2] + $game_skills[0]
+      @battler_index = @moves[0].frame
+      @timer = 0
+    end
+  end
+  
+  def regenerate(i=-1)
+    if i == -1
+      i = self.wil
+    end
+    if @sp < maxsp
+      @sp += i
+      if @sp > maxsp
+        i = maxsp - @sp
+        @sp = maxsp
+      else
+        i = 0
+      end
+    end
+    self.mp += i * 2
+  end
+    
+  def switch_row
+    @frontline = (not @frontline)
+    reset_moves
+    if @frontline
+      @moves = $game_skills[3] + @moves
+    else
+      @moves = $game_skills[5] + @moves
+    end
+    @battler_index = @moves[0].frame
+  end
+  
+  def cast(i = 0)
+    reset_moves
+    @moves = $game_skills[i] + @moves
+    @battler_index = @moves[0].frame
+  end
+  
+end

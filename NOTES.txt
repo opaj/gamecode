@@ -1,0 +1,26 @@
+#  My page for notes
+#
+#     Scene_Battle
+#         Phase 1 is just calling update to everything, including battlers
+#               Update on a battler returns a Game_BattleAction, which Scene_Battle processes
+#         Phase 2 is menus
+#
+#
+#     Game_Move
+#         A basic class that active battlers have a queue of--once they've completed the basic
+#               move, they pop it off the list and do the next one
+#
+#
+#
+#     Player Stats
+#        HP, SP, MP--layers of health, then skill and magic points
+#        Attack, Defense, M.Def, Magic
+#        Endurance -- decreases staggering
+#        Willpower -- increases SP & MP Recovery rate
+#        Speed -- increases movement rate through space
+#        Dexterity -- increases attack speed
+#
+#
+#      Game_Skills
+#         a container class containing the Game_Move data for every in-battle action, including
+#         escaping, item usage, taking damage, death, and standing still

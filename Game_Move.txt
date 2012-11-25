@@ -1,0 +1,31 @@
+class Game_Move
+  
+  attr_reader  :type                      # 0: continue until timer/unlimited;  1: stop when in range;  2: retreat
+  attr_reader  :time                      # -1 never runs out of time; 0 runs only one frame
+  attr_reader  :action                    # Game_BattleAction.  Returns nil most of the time.
+  attr_reader  :interrupt_factor      # how easily can this be interrupted? 0 cannot be interrupted
+  attr_reader  :dx                        #  change in x, y, and z
+  attr_reader  :dy
+  attr_reader  :dz
+  attr_reader  :can_act                 # returns true when user input is allowed
+  attr_reader  :frame                   # which PC graphic id is supposed to show
+  attr_reader  :animated
+  attr_reader  :guard
+  
+  def initialize(type = 0,time = 0,interrupt_factor = 0,can_act = true,frame = 0,dx = 0,dy = 0,dz = 0,action = nil,guard = false)
+    @type = type
+    @time = time
+    @action = action
+    @interrupt_factor = interrupt_factor
+    @dx = dx
+    @dy = dy
+    @dz = dz
+    @can_act = can_act
+    @frame = frame
+    @animated = false
+    @guard = guard
+  end
+  
+  
+  
+end

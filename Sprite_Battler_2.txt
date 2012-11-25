@@ -1,0 +1,8 @@
+class Sprite_Battler < RPG::Sprite
+  
+  def damage(damage, critical)
+    temp = Sprite_Damage.new(self.viewport, damage, critical, self)
+    @damages.push(temp)
+  end
+  
+end

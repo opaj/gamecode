@@ -1,0 +1,161 @@
+class Game_A_Cat < Game_Actor
+  
+  def initialize
+    super(5)
+    sprite_setup
+    @frontline = true
+    @tech_up = 12
+    @tech_left = 11
+    @tech_down = 10
+    @tech_right = 91
+    self.learn_skill(91)
+  end
+  
+   # Using Xander's graphics as placeholder.
+  def sprite_setup
+    @battler_name[0] = "Xander-Standing"
+    @battler_name[1] = "Xander-Down"
+    @battler_name[2] = "Xander-Damage"
+    @battler_name[3] = "Xander-Casting1"
+    @battler_name[4] = "Xander-Casting2"
+    @battler_name[5] = "Xander-Draw1"
+    @battler_name[6] = "Xander-Draw2"
+    @battler_name[7] = "Xander-Draw3"
+    @battler_name[8] = "Xander-Stance"
+    @battler_name[9] = "Xander-Running1"
+    @battler_name[10] = "Xander-Running2"
+    @battler_name[11] = "Xander-Running3"
+    @battler_name[12] = "Xander-Running4"
+    @battler_name[13] = "Xander-Retreating1"
+    @battler_name[14] = "Xander-Retreating2"
+    @battler_name[15] = "Xander-Retreating3"
+    @battler_name[16] = "Xander-Retreating4"
+    @battler_name[17] = "Xander-Item"
+    @battler_name[18] = "Xander-Guard1"
+    @battler_name[19] = "Xander-Jump"
+    @battler_name[30] = "Xander-AttackA1"
+    @battler_name[31] = "Xander-AttackA2"
+    @battler_name[32] = "Xander-AttackA3"
+    @battler_name[33] = "Xander-AttackA4"
+    @battler_name[34] = "Xander-AttackA5"
+    @battler_name[35] = "Xander-AttackA6"
+    @battler_name[36] = "Xander-AttackB1"
+    @battler_name[37] = "Xander-AttackB2"
+    @battler_name[38] = "Xander-AttackB3"
+    @battler_name[39] = "Xander-AttackB4"
+    @battler_name[40] = "Xander-AttackB5"
+    @battler_name[41] = "Xander-AttackB6"
+    @battler_name[42] = "Xander-AttackC1"
+    @battler_name[43] = "Xander-AttackC2"
+    @battler_name[44] = "Xander-AttackC3"
+    @battler_name[45] = "Xander-AttackC4"
+    @battler_name[46] = "Xander-AttackC5"
+    @battler_name[47] = "Xander-AttackC6"
+    @battler_name[48] = "Xander-AttackD1"
+    @battler_name[49] = "Xander-AttackD2"
+    @battler_name[50] = "Xander-AttackD3"
+    @battler_name[51] = "Xander-AttackD4"
+    @battler_name[52] = "Xander-AttackD5"
+    @battler_name[53] = "Xander-AttackD6"
+    @battler_name[54] = "Xander-AttackD7"
+    @battler_name[55] = "Xander-AttackD8"
+    @battler_name[56] = "Xander-AttackE1"
+    @battler_name[57] = "Xander-AttackE2"
+    @battler_name[58] = "Xander-AttackE3"
+    @battler_name[59] = "Xander-AttackE4"
+  end
+  
+  def range
+    return 100
+  end
+  
+  def base_maxhp
+    return [[(710 + 70.5 * @level).to_i, 1].max, 9999].min
+  end
+  
+  def base_maxsp
+    return [[(402 + 40.3 * @level).to_i, 1].max, 9999].min
+  end
+  
+  def base_maxmp
+    return [[(505 + 50.7 * @level).to_i, 1].max, 9999].min
+  end
+  
+  def base_str
+    n = (71 + 7.4 * @level).to_i
+    weapon = equip0
+    armor1 = equip1
+    armor2 = equip2
+    armor3 = equip3
+    armor4 = equip4
+    n += weapon != nil ? weapon.str_plus : 0
+    n += armor1 != nil ? armor1.str_plus : 0
+    n += armor2 != nil ? armor2.str_plus : 0
+    n += armor3 != nil ? armor3.str_plus : 0
+    n += armor4 != nil ? armor4.str_plus : 0
+    return [[n, 1].max, 999].min
+  end
+  
+  def base_pdef
+    return [[(51 + 6.1 * @level).to_i + super, 1].max, 999].min
+  end
+  
+  def base_mdef
+    return [[(9 + 2.1 * @level).to_i + super, 1].max, 999].min
+  end
+
+  def base_endr
+    return [[(69 + 7.5 * @level).to_i, 1].max, 999].min
+  end
+  
+  def base_dex
+    n = (45 + 0.85 * @level).to_i
+    weapon = equip0
+    armor1 = equip1
+    armor2 = equip2
+    armor3 = equip3
+    armor4 = equip4
+    n += weapon != nil ? weapon.dex_plus : 0
+    n += armor1 != nil ? armor1.dex_plus : 0
+    n += armor2 != nil ? armor2.dex_plus : 0
+    n += armor3 != nil ? armor3.dex_plus : 0
+    n += armor4 != nil ? armor4.dex_plus : 0
+    return [[n, 1].max, 999].min
+  end
+  
+  def base_agi
+    n = (48 + @level).to_i
+    weapon = equip0
+    armor1 = equip1
+    armor2 = equip2
+    armor3 = equip3
+    armor4 = equip4
+    n += weapon != nil ? weapon.agi_plus : 0
+    n += armor1 != nil ? armor1.agi_plus : 0
+    n += armor2 != nil ? armor2.agi_plus : 0
+    n += armor3 != nil ? armor3.agi_plus : 0
+    n += armor4 != nil ? armor4.agi_plus : 0
+    return [[n, 1].max, 999].min
+  end
+  
+  def base_int
+    n = (29 + 3.2 * @level).to_i
+    weapon = equip0
+    armor1 = equip1
+    armor2 = equip2
+    armor3 = equip3
+    armor4 = equip4
+    n += weapon != nil ? weapon.int_plus : 0
+    n += armor1 != nil ? armor1.int_plus : 0
+    n += armor2 != nil ? armor2.int_plus : 0
+    n += armor3 != nil ? armor3.int_plus : 0
+    n += armor4 != nil ? armor4.int_plus : 0
+    return [[n, 1].max, 999].min
+  end
+  
+  def base_wil
+    n = (3 + 0.65 * @level).to_i
+    return [[n, 1].max, 999].min
+  end
+
+end

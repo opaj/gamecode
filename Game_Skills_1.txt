@@ -1,0 +1,322 @@
+class Game_Skills
+  
+  SPEED = 0.5
+  
+  attr_reader     :desc                                                    # index of tech descriptions
+  
+  def initialize
+    @data = []
+    @name = []
+    @icon = []
+    @desc = []
+    setup_data
+  end
+  
+  def [](i)
+    return @data[i]
+  end
+  
+  def icon(i)
+    if @icon[i] == nil
+      return ""
+    else
+      return @icon[i]
+    end
+  end
+  
+  def name(i)
+    if @name[i] == nil
+      return "<NO-NAME>"
+    else
+      return @name[i]
+    end
+  end
+  
+  def desc(i)
+    if @desc[i] == nil
+      return "<MISSING-DESC>"
+    else
+      return @desc[i]
+    end
+  end
+  
+  def cost(i)
+    tally = 0
+    for temp in @data[i]
+      unless temp.action == nil
+        if temp.action.skill_id > 0
+          tally += $data_skills[temp.action.skill_id].sp_cost
+        end
+      end
+    end
+    return tally
+  end
+  
+  def scope(i)
+    scope = 0
+    for temp in @data[i]
+      unless temp.action == nil
+        if temp.action.skill_id > 0
+          foo = $data_skills[temp.action.skill_id].scope
+          if foo == 1 or foo == 3 or foo == 5
+            scope = foo
+          end
+        end
+      end
+    end
+    return foo
+  end
+  
+  def setup_data
+    charge = Game_Move_Anim.new(1,-1,50,false,[9,10,11,12],10,SPEED)
+    retreat = Game_Move_Anim.new(2,-1,0,false,[13,14,15,16],10,-SPEED)
+    
+    temp = []                                                               # 0: Idle Stance
+    temp[0] = Game_Move.new(0,-1,50,true) # unlimited, can act, frame 0
+    @data[0] = temp
+    
+    temp = []                                                               # 1: Dead
+    temp[0] = Game_Move.new(0,-1,0,false,1)
+    @data[1] = temp
+    
+    temp = []                                                               # 2: Take Damage
+    temp[0] = Game_Move.new(0,10,0,false,2)
+    @data[2] = temp
+    
+    temp = []                                                               # 3: Draw
+    temp[0] = Game_Move.new(0,5,0,false,5)
+    temp[1] = Game_Move.new(0,5,0,false,6)
+    temp[2] = Game_Move.new(0,5,0,false,7)
+    @data[3] = temp
+    
+    temp = []                                                               # 4: Battle Stance
+    temp[0] = Game_Move.new(0,-1,50,true,8)
+    @data[4] = temp
+    
+    temp = []                                                               # 5: Sheath
+    temp[0] = retreat
+    temp[1] = Game_Move.new(0,5,0,false,7)
+    temp[2] = Game_Move.new(0,5,0,false,6)
+    temp[3] = Game_Move.new(0,5,0,false,5)
+    @data[5] = temp
+    
+    temp = []                                                               # 6: Use Item
+    action = Game_BattleAction.new
+    action.kind = 2
+    temp[0] = Game_Move.new(0,10,0,false,17)
+    temp[1] = Game_Move.new(0,0,0,false,17,0,0,0,action)
+    @data[6] = temp
+    
+    temp = []                                                                # 7: Retreat
+    action = Game_BattleAction.new
+    action.kind = 1
+    action.skill_id = 10
+    temp[0] = retreat
+    temp[1] = Game_Move.new(0,0,0,13,0,0,0,action)
+    @data[7] = temp
+    
+    #10 ~ 19 :: Blade
+    
+    temp = []                                                               # 10: Blade Strike 1
+    temp[0] = charge
+    action = Game_BattleAction.new
+    action.kind = 0
+    action.skill_id = 1
+    temp[1] = Game_Move.new(0,5,75,false,30)
+    temp[2] = Game_Move.new(0,5,75,false,32)
+    temp[3] = Game_Move.new(0,0,75,false,32,0,0,0,action)
+    temp[4] = Game_Move.new(0,5,75,false,35)
+    @data[10] = temp
+    @name[10] = "Swipe"
+    @desc[10] = "A quick, weak blow"
+    
+    temp = []                                                               # 11: Blade Strike 2
+    temp[0] = charge
+    action = Game_BattleAction.new
+    action.kind = 0
+    action.skill_id = 2
+    temp[1] = Game_Move.new(0,5,50,false,42)
+    temp[2] = Game_Move.new(0,5,50,false,43)
+    temp[3] = Game_Move.new(0,0,50,false,43,0,0,0,action)
+    temp[4] = Game_Move.new(0,5,50,false,44)
+    temp[5] = Game_Move.new(0,5,50,false,45)
+    temp[6] = Game_Move.new(0,5,50,false,46)
+    temp[7] = Game_Move.new(0,5,50,false,47)
+    @data[11] = temp
+    @name[11] = "Cut"
+    @desc[11] = "A strike of medium strength and cost"
+    
+    temp = []                                                               # 12: Blade Strike 3
+    temp[0] = charge
+    action = Game_BattleAction.new
+    action.kind = 0
+    action.skill_id = 3
+    temp[1] = Game_Move.new(0,20,25,false,30)
+    temp[2] = Game_Move.new(0,0,25,false,31,0,0,0,action)
+    temp[3] = Game_Move.new(0,5,25,false,31)
+    temp[4] = Game_Move.new(0,5,25,false,32)
+    temp[5] = Game_Move.new(0,5,25,false,33)
+    temp[6] = Game_Move.new(0,5,25,false,34)
+    temp[7] = Game_Move.new(0,20,25,false,35)
+    @data[12] = temp
+    @name[12] = "Slash"
+    @desc[12] = "A powerful, slow attack"
+    
+    temp = []                                                               # 13: Blade Strike 4
+    temp[0] = charge
+    action = Game_BattleAction.new
+    action.kind = 0
+    action.skill_id = 4
+    temp[1] = Game_Move.new(0,5,50,false,42)
+    temp[2] = Game_Move.new(0,0,50,false,43,0,0,0,action)
+    temp[3] = Game_Move.new(0,1,50,false,43)
+    temp[4] = Game_Move.new(0,2,50,false,44)
+    temp[5] = Game_Move.new(0,2,50,false,45)
+    temp[6] = Game_Move.new(0,2,50,false,46)
+    temp[7] = Game_Move.new(0,0,50,false,43,0,0,0,action)
+    temp[8] = Game_Move.new(0,1,50,false,43)
+    temp[9] = Game_Move.new(0,2,50,false,44)
+    temp[10] = Game_Move.new(0,2,50,false,45)
+    temp[11] = Game_Move.new(0,2,50,false,46)
+    temp[12] = Game_Move.new(0,0,50,false,43,0,0,0,action)
+    temp[13] = Game_Move.new(0,1,50,false,43)
+    temp[14] = Game_Move.new(0,2,50,false,44)
+    temp[15] = Game_Move.new(0,2,50,false,45)
+    temp[16] = Game_Move.new(0,2,50,false,46)
+    temp[17] = Game_Move.new(0,5,50,false,47)
+    @data[13] = temp
+    @name[13] = "Flurry"
+    @desc[13] = "Three strikes in quick succession"
+    
+    temp = []                                                               # 14: Blade Strike 5
+    temp[0] = charge
+    action = Game_BattleAction.new
+    action.kind = 0
+    action.skill_id = 5
+    temp[1] = Game_Move.new(0,10,50,false,30)
+    temp[2] = Game_Move.new(0,5,50,false,31)
+    temp[3] = Game_Move.new(0,0,50,false,31,0,0,0,action)
+    temp[4] = Game_Move.new(0,1,50,false,32)
+    temp[5] = Game_Move.new(0,2,50,false,56)
+    temp[6] = Game_Move.new(0,3,50,false,57)
+    temp[7] = Game_Move.new(0,0,50,false,58,0,0,0,action)
+    temp[8] = Game_Move.new(0,5,50,false,59)
+    @data[14] = temp
+    @name[14] = "X-Cut"
+    @desc[14] = "Cut an 'X' into the front of your enemies"
+    
+    temp = []                                                               # 15: Blade Strike 6
+    temp[0] = charge
+    action = Game_BattleAction.new
+    action.kind = 0
+    action.skill_id = 6
+    temp[1] = Game_Move.new(0,10,50,false,48)
+    temp[2] = Game_Move.new(0,3,50,false,49)
+    temp[3] = Game_Move.new(0,0,50,false,50,0,0,0,action)
+    temp[4] = Game_Move.new(0,2,50,false,50)
+    temp[5] = Game_Move.new(0,3,50,false,51)
+    temp[6] = Game_Move.new(0,0,50,false,52,0,0,0,action)
+    temp[7] = Game_Move.new(0,2,50,false,52)
+    temp[8] = Game_Move.new(0,3,50,false,53)
+    temp[9] = Game_Move.new(0,0,50,false,54,0,0,0,action)
+    temp[10] = Game_Move.new(0,2,50,false,54)
+    temp[11] = Game_Move.new(0,3,50,false,55)
+    temp[12] = Game_Move.new(0,0,50,false,43,0,0,0,action)
+    temp[13] = Game_Move.new(0,2,50,false,43)
+    temp[14] = Game_Move.new(0,3,50,false,44)
+    temp[15] = Game_Move.new(0,3,50,false,45)
+    temp[16] = Game_Move.new(0,3,50,false,46)
+    temp[17] = Game_Move.new(0,0,50,false,43,0,0,0,action)
+    temp[18] = Game_Move.new(0,2,50,false,43)
+    temp[19] = Game_Move.new(0,3,50,false,44)
+    temp[20] = Game_Move.new(0,3,50,false,45)
+    temp[21] = Game_Move.new(0,3,50,false,37)
+    temp[22] = Game_Move.new(0,0,50,false,38,0,0,0,action)
+    temp[23] = Game_Move.new(0,2,50,false,38)
+    temp[24] = Game_Move.new(0,3,50,false,39)
+    temp[25] = Game_Move.new(0,3,50,false,40)
+    temp[26] = Game_Move.new(0,5,50,false,41)
+    @data[15] = temp
+    @name[15] = "Blade Dance"
+    @desc[15] = "A series of strikes lead to death by 1,000 cuts"
+    
+    temp = []                                                               # 16: Blade Strike 7
+    temp[0] = charge
+    action = Game_BattleAction.new
+    action.kind = 0
+    action.skill_id = 7
+    temp[1] = Game_Move.new(0,50,0,false,56,0,-1)
+    temp[2] = Game_Move.new(0,10,0,false,57,0,5)
+    temp[3] = Game_Move.new(0,0,0,false,58,0,0,0,action)
+    temp[4] = Game_Move.new(0,5,0,false,59)
+    @data[16] = temp
+    @name[16] = "Guillotine"
+    @desc[16] = "A single, unstoppable mortal blow"
+    
+    temp = []                                                               # 17: Blade Strike 8
+    temp[0] = charge
+    action = Game_BattleAction.new
+    action.kind = 0
+    action.skill_id = 8
+    temp[1] = Game_Move.new(0,10,50,false,36)
+    temp[2] = Game_Move.new(0,10,50,false,37)
+    temp[3] = Game_Move.new(0,0,50,false,38,0,0,0,action)
+    temp[4] = Game_Move.new(0,10,50,false,39)
+    temp[4] = Game_Move.new(0,10,50,false,40)
+    @data[17] = temp
+    @name[17] = "Pierce"
+    @desc[17] = "A piercing strike with a chance to stun"
+    
+    #20 ~ 29 :: Hand-to-hand
+    #30 ~ 39 :: Brute
+    #40 ~ 49 :: Sonic Blade
+    #50 ~ 59 :: Thievery
+    #60 ~ 69 :: Martial Arts
+    
+    
+    #90 ~ 99 :: Heavy Guard
+    
+    temp = []                                                                 # 90: Dodge
+    temp[0] = Game_Move.new(2,10,0,false,19,-SPEED * 5)
+    @data[90] = temp
+    @name[90] = "Dodge"
+    @desc[90] = "Jump back to avoid enemy attacks."
+    
+    temp = []                                                               # 91: Guard
+    temp[0] = Game_Move.new(0,-1,0,true,18,0,0,0,nil,true)
+    @data[91] = temp
+    @name[91] = "Guard"
+    @desc[91] = "Protect yourself."
+    
+    #100 ~ 109 :: Lightning Magic (chaos)
+    icon = "044-Skill01"
+    
+    temp = []                                                               # 100: Test Lightning
+    action = Game_BattleAction.new
+    action.kind = 1
+    action.skill_id = 20
+    temp[0] = Game_Move.new(0,100,1000,false,3)
+    temp[1] = Game_Move.new(0,0,0,false,4,0,0,0,action)
+    temp[2] = Game_Move.new(0,5,0,false,4)
+    @data[100] = temp
+    @name[100] = "Test Lightning"
+    @desc[100] = "This is only a test."
+    @icon[100] = icon
+    
+    #110 ~ 119 :: Fire Magic (massive cost, massive damage)
+    #120 ~ 129 :: Plant Magic (status effects)
+    #130 ~ 139 :: Earth Magic (slow but powerful)
+    #140 ~ 149 :: Water Magic (relatively weak, but efficient)
+    #150 ~ 159 :: Metal Magic (middle of the road)
+    #160 ~ 169 :: Light Magic
+    #170 ~ 179 :: Shadow Magic
+    #180 ~ 189 :: Healing Magic
+    
+    
+    #220 on :: Enemy only techs
+    temp = []                                                               # Trainer: Charge and guard
+    temp[0] = charge
+    temp[1] = Game_Move.new(0,-1,0,false,18,0,0,0,nil,true)
+    @data[220] = temp
+  end
+end

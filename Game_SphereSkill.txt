@@ -1,0 +1,11 @@
+# Game_SphereSkill: Mapping out the Sphere Skills
+
+class Game_SphereSkill
+  attr_reader :cost
+  attr_reader :skill_id
+  
+  def initialize(cost = 0, skill_id = 0)
+    @cost = cost
+    @skill_id = skill_id
+  end
+end

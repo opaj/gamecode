@@ -1,0 +1,16 @@
+class Game_Move_Anim < Game_Move
+  
+  def initialize(type = 0,time = 0,interrupt_factor = 0,can_act = true,frames = [],delay = 1,dx = 0,dy = 0,dz = 0,action = nil,guard = false)
+    super(type,time,interrupt_factor,can_act,0,dx,dy,dz,action,guard)
+    @frame2 = []
+    @frames = frames
+    @delay = delay
+    @animated = true
+  end
+
+  def frame(timer = 0)
+    index = (timer / @delay) % @frames.size
+    return @frames[index]
+  end
+  
+end

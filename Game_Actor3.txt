@@ -1,0 +1,27 @@
+class Game_Actor < Game_Battler
+  
+  def equip0
+    return $data_weapons[@weapon_id]
+  end
+  
+  def equip1
+    return $data_armors[@armor1_id]
+  end
+  
+  def equip2
+    return $data_armors[@armor2_id]
+  end
+  
+  def equip3
+    return $data_armors[@armor3_id]
+  end
+  
+  def equip4
+    return $data_armors[@armor4_id]
+  end
+  
+  def equip_type(i)
+    return i
+  end
+  
+end

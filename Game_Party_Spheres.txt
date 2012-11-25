@@ -1,0 +1,33 @@
+class Game_Party
+  
+    #--------------------------------------------------------------------------
+  # ? has_sphere?(sphere_index)
+  #     sphere_index: the index of da sphere
+  #--------------------------------------------------------------------------
+  def has_sphere?(sphere_index)
+    result = false
+    if @spheres.include?(sphere_index)
+      return true
+    end
+    for actor in @actors + @reserve
+      if actor.sphere_id == sphere_index
+        return true
+      end
+    end
+    return false
+  end
+  def remove_sphere(sphere_index)
+    @spheres.delete(sphere_index)
+  end
+  def add_sphere(sphere_index)
+    unless self.has_sphere?(sphere_index)
+      @spheres.push(sphere_index)
+    end
+  end
+  def add_sphere_blind(sphere_index)
+    unless @spheres.include?(sphere_index)
+      @spheres.push(sphere_index)
+    end
+  end
+  
+end

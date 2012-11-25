@@ -1,0 +1,73 @@
+# Game_Sphere: Teh Awesomeful Sphere class
+
+class Game_Sphere
+  
+  attr_reader   :name
+  attr_reader   :id
+  attr_reader   :icon_name
+  attr_reader   :description
+  attr_reader   :path
+  attr_reader   :hp
+  attr_reader   :sp
+  attr_reader   :mp
+  attr_reader   :atk
+  attr_reader   :pdef
+  attr_reader   :mdef
+  attr_reader   :dex
+  attr_reader   :spd
+  attr_reader   :int
+  attr_reader   :endr
+  attr_reader   :wil
+  
+
+  @@version = 1
+  
+  def initialize(id = 0, name = "", icon_name = "", description = [], path = [], stats = [0,0,0,0,0,0,0,0,0,0,0])
+    @id = id
+    @name = name
+    @icon_name = icon_name
+    @description = description
+    @path = [Game_SphereSkill.new].concat(path)
+    @hp = stats[0]
+    @sp = stats[1]
+    @mp = stats[2]
+    @atk = stats[3]
+    @pdef = stats[4]
+    @mdef = stats[5]
+    @dex = stats[6]
+    @spd = stats[7]
+    @int = stats[8]
+    @endr = stats[9]
+    @wil = stats[10]
+    @found = false
+  end
+  
+  def update(source)
+    @id = source.id
+    @name = source.name
+    @icon_name = source.icon_name
+    @description = source.description
+    @path = source.path
+    @hp = source.hp
+    @sp = source.sp
+    @mp = source.mp
+    @atk = source.atk
+    @pdef = source.pdef
+    @mdef = source.mdef
+    @dex = source.dex
+    @spd = source.spd
+    @int = source.int
+    @endr = source.endr
+    @wil = source.wil
+  end
+  
+  def enabled?
+    return @found
+  end
+  def enable
+    @found = true
+  end
+  def disable
+    @found = false
+  end
+end
